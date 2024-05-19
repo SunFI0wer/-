@@ -1,0 +1,21 @@
+#include <Servo.h>            //加载文件库
+int pos = 0;
+int SG90 = 9;
+Servo myservo;
+int threshold =400; //光强值，根据实际情况调整
+void setup()
+{
+  myservo.attach(SG90, 500, 2500);          //修正脉冲宽度
+  Serial.begin(115200); //设置串口波特率
+}
+
+void loop()
+{
+int n = analogRead(A3); //读取模拟口A3
+ Serial.println(n); //串口打印，输出n的值
+if (n>threshold ) //晚上光线暗，n值变大
+ myservo.write(0); //点亮路灯
+else
+myservo.write(50); //关闭路灯
+delay(200);
+}
